@@ -14,6 +14,14 @@ package com.flyingspheres.drone;
  */
 public interface CommandInterface {
 
+    //teclas del mapa
+    public static final String MENSAJE = "mensaje";
+    public static final String LLAMADORA = "llamadora";
+    public static final String PUERTO = "puerto";
+    public static final String BIEN = "OK";
+    public static final String MALO = "FALSE";
+
+    //SDK Comandos
     public static final String Orden = "command";
     public static final String Despegará = "takeoff";
     public static final String Aterrizará = "land";

@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Aaron O'Brien on 2019-06-01.
@@ -51,21 +53,11 @@ public class TelloDrone extends Thread implements CommandInterface {
             while (corriendo) {
                 System.out.println("la abeja está esperando órdenes");
                 try {
-                    DatagramPacket packet = new DatagramPacket(buff, buff.length);
-                    udpSocket.receive(packet);
-                    String received = new String(packet.getData(), 0, packet.getLength());
-                    System.out.println("Comando recibido: "+ received);
+                    Map<String, Object> respuestaMap = receivePacket();
 
-                    InetAddress address = packet.getAddress();
-                    int port = packet.getPort();
+                    String respuesta = procesoComando((String)respuestaMap.get(MENSAJE));
 
-                    String respuesta = "OK";
-                    DatagramPacket respuestaPaquete = new DatagramPacket(respuesta.getBytes(), respuesta.length(), address, port);
-                    udpSocket.send(respuestaPaquete);
-                    if (received.equals("end")) {
-                        corriendo = false;
-                        continue;
-                    }
+                    enviarRespuesta(respuesta, (InetAddress)respuestaMap.get(LLAMADORA), (Integer)respuestaMap.get(PUERTO));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -76,5 +68,34 @@ public class TelloDrone extends Thread implements CommandInterface {
             corriendo = false;
             System.out.println("la abeja apagada");
         }
+    }
+
+    private Map<String, Object> receivePacket() throws IOException {
+        DatagramPacket packet = new DatagramPacket(buff, buff.length);
+        udpSocket.receive(packet);
+        String mensaje = new String(packet.getData(), 0, packet.getLength());
+        System.out.println("Comando recibido: "+ mensaje);
+
+        Map<String, Object> respuesta = new HashMap<String, Object>();
+        respuesta.put(MENSAJE, mensaje);
+        respuesta.put(LLAMADORA, packet.getAddress());
+        respuesta.put(PUERTO, packet.getPort());
+
+        return respuesta;
+    }
+
+    private void enviarRespuesta(String mensaje, InetAddress cliente, Integer puerto) throws IOException {
+        DatagramPacket respuestaPaquete = new DatagramPacket(mensaje.getBytes(),
+                mensaje.length(),
+                cliente,
+                puerto);
+        udpSocket.send(respuestaPaquete);
+    }
+
+    private String procesoComando(String comando) {
+        if (comando.equals("end")) {
+            corriendo = false;
+        }
+        return BIEN;
     }
 }
