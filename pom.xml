@@ -38,6 +38,10 @@
                             <excludes>
                                 <exclude>**/it/**</exclude>
                             </excludes>
+                            <includes>
+                                <include>**/Prueba*.*</include>
+                                <include>**/Test*.*</include>
+                            </includes>
                             <reportsDirectory>${project.build.directory}/test-reports/unit</reportsDirectory>
                         </configuration>
                     </execution>
