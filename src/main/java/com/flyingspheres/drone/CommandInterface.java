@@ -20,6 +20,7 @@ public interface CommandInterface {
     public static final String PUERTO = "puerto";
     public static final String BIEN = "OK";
     public static final String MALO = "FALSE";
+    public static final String APAGADA = "end";
 
     //SDK Comandos
     public static final String Orden = "command";

@@ -27,6 +27,7 @@ public class TelloDrone extends Thread implements CommandInterface {
     private byte[] buff = new byte[256];
 
     private static TelloDrone abeja = null;
+    private MaquinaDeEstado máquinaDeEstado;
 
     public static TelloDrone crear() throws SocketException {
         if (abeja == null) {
@@ -37,6 +38,7 @@ public class TelloDrone extends Thread implements CommandInterface {
 
     private TelloDrone() throws SocketException {
         udpSocket = new DatagramSocket(4445);
+        máquinaDeEstado = MaquinaDeEstado.crearMáquina();
     }
 
     public boolean isCorriendo() {
@@ -93,9 +95,12 @@ public class TelloDrone extends Thread implements CommandInterface {
     }
 
     private String procesoComando(String comando) {
-        if (comando.equals("end")) {
+        String respuesta = BIEN;
+        if (comando.equals(APAGADA)) {
             corriendo = false;
+        } else {
+            respuesta = máquinaDeEstado.recibirComando(comando);
         }
-        return BIEN;
+        return respuesta;
     }
 }
