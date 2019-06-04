@@ -31,4 +31,7 @@ public class PruebaFabricaDeComando {
             Assert.assertTrue(false);
         }
     }
+
+    @Test
+    public void pureba
 }
