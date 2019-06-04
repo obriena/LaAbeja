@@ -1,5 +1,7 @@
 package com.flyingspheres.drone.commands;
 
+import com.flyingspheres.drone.CommandInterface;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.lang.reflect.Constructor;
@@ -8,7 +10,8 @@ public class FabricaDeComando {
 
     private static final Map<String, String> comandoMapa = new HashMap<>();
     static {
-        comandoMapa.put("command", "com.flyingspheres.drone.commands.ComandoModo");
+        comandoMapa.put(CommandInterface.Orden, "com.flyingspheres.drone.commands.ComandoModo");
+        comandoMapa.put(CommandInterface.Despegará, "com.flyingspheres.drone.commands.DespegaráComando");
     }
 
     public FabricaDeComando() {

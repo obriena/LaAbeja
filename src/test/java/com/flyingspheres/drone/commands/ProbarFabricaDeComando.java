@@ -5,8 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PruebaFabricaDeComando {
-
+public class ProbarFabricaDeComando {
 
     @Test 
     public void purebaFabricaDeComando() {
@@ -32,6 +31,4 @@ public class PruebaFabricaDeComando {
         }
     }
 
-    @Test
-    public void pureba
 }

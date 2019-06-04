@@ -2,6 +2,8 @@ package com.flyingspheres.drone;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Aaron O'Brien on 2019-06-01.
@@ -19,28 +21,46 @@ public class TelloController implements CommandInterface{
 
     private DatagramSocket socket;
     private InetAddress address;
+    private int puerto;
 
     private byte[] buff;
     private static TelloController controller = null;
+
+    private List<String> commandHistory = new ArrayList<String>();
 
     public static TelloController createController() throws SocketException, UnknownHostException {
         controller = new TelloController();
         return controller;
     }
 
+    public static TelloController createController(String droneDireccion, int dronePuerto) throws SocketException, UnknownHostException {
+        controller = new TelloController(droneDireccion, dronePuerto);
+        return controller;
+    }
+
     private TelloController() throws SocketException, UnknownHostException {
         socket = new DatagramSocket();
         address = InetAddress.getByName("localhost");
+        puerto = 4445;
     }
 
-    private String sendCommand(String command) throws IOException {
+    private TelloController(String droneDireccion, int dronePuerto) throws SocketException, UnknownHostException {
+        socket = new DatagramSocket();
+        address = InetAddress.getByName(droneDireccion);
+        puerto = dronePuerto;
+    }
+
+    public String sendCommand(String command) throws IOException {
         buff = command.getBytes();
-        DatagramPacket packet = new DatagramPacket(buff, buff.length, address, 4445);
+        DatagramPacket packet = new DatagramPacket(buff, buff.length, address, puerto);
         socket.send(packet);
 
         packet = new DatagramPacket(buff, buff.length);
         socket.receive(packet);
         String received = new String(packet.getData(), 0, packet.getLength());
+
+        commandHistory.add(command + ":" + received);
+
         return received;
     }
 

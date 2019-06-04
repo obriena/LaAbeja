@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
  * of your equipment and backup of your data, and THE PROVIDER will not be liable for any damages you may suffer in
  * connection with using, modifying, or distributing this SOFTWARE PRODUCT.
  */
-public class TestDrone {
+public class ProbarDrone {
     TelloDrone drone = null;
     TelloController controller = null;
 

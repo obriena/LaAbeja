@@ -1,5 +1,8 @@
 package com.flyingspheres.drone;
 
+import com.flyingspheres.drone.commands.Comando;
+import com.flyingspheres.drone.commands.FabricaDeComando;
+
 /**
  * Created by Aaron O'Brien on 2019-06-02.
  * <p>
@@ -36,6 +39,12 @@ public class MaquinaDeEstado implements CommandInterface {
 
     public String recibirComando(String comando){
         String respuesta = MALO;
+        try {
+            Comando comandoObjecto = FabricaDeComando.recuperarComando(comando);
+            respuesta = ejecutarComando(comandoObjecto);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
         if (modoDeComando) {
 
         } else {
@@ -47,4 +56,15 @@ public class MaquinaDeEstado implements CommandInterface {
         return respuesta;
     }
 
+    private String ejecutarComando(Comando comandoObjecto) {
+        return comandoObjecto.executeCommand(this);
+    }
+
+    public boolean isModoDeComando() {
+        return modoDeComando;
+    }
+
+    public void setModoDeComando(boolean modoDeComando) {
+        this.modoDeComando = modoDeComando;
+    }
 }

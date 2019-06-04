@@ -1,5 +1,7 @@
 package com.flyingspheres.drone.commands;
 
+import com.flyingspheres.drone.MaquinaDeEstado;
+
 /**
  * Created by Aaron O'Brien on 2019-06-01.
  * <p>
@@ -13,5 +15,5 @@ package com.flyingspheres.drone.commands;
  * connection with using, modifying, or distributing this SOFTWARE PRODUCT.
  */
 public interface Comando {
-
+    public String executeCommand(MaquinaDeEstado maquina);
 }
