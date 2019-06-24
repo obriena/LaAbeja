@@ -22,7 +22,7 @@ import java.net.UnknownHostException;
  */
 public class ProbarDrone {
     TelloDrone drone = null;
-    TelloController controller = null;
+    ControladorDeTrello controller = null;
 
 
     @Before
@@ -30,7 +30,7 @@ public class ProbarDrone {
 
         try {
             drone = TelloDrone.crear();
-            controller = TelloController.createController();
+            controller = ControladorDeTrello.createController();
         } catch (SocketException e) {
             e.printStackTrace();
             Assert.assertTrue(false);

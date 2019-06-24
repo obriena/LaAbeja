@@ -17,34 +17,34 @@ import java.util.List;
  * of your equipment and backup of your data, and THE PROVIDER will not be liable for any damages you may suffer in
  * connection with using, modifying, or distributing this SOFTWARE PRODUCT.
  */
-public class TelloController implements CommandInterface{
+public class ControladorDeTrello implements CommandInterface{
 
     private DatagramSocket socket;
     private InetAddress address;
     private int puerto;
 
     private byte[] buff;
-    private static TelloController controller = null;
+    private static ControladorDeTrello controller = null;
 
     private List<String> commandHistory = new ArrayList<String>();
 
-    public static TelloController createController() throws SocketException, UnknownHostException {
-        controller = new TelloController();
+    public static ControladorDeTrello createController() throws SocketException, UnknownHostException {
+        controller = new ControladorDeTrello();
         return controller;
     }
 
-    public static TelloController createController(String droneDireccion, int dronePuerto) throws SocketException, UnknownHostException {
-        controller = new TelloController(droneDireccion, dronePuerto);
+    public static ControladorDeTrello createController(String droneDireccion, int dronePuerto) throws SocketException, UnknownHostException {
+        controller = new ControladorDeTrello(droneDireccion, dronePuerto);
         return controller;
     }
 
-    private TelloController() throws SocketException, UnknownHostException {
+    private ControladorDeTrello() throws SocketException, UnknownHostException {
         socket = new DatagramSocket();
         address = InetAddress.getByName("localhost");
         puerto = 4445;
     }
 
-    private TelloController(String droneDireccion, int dronePuerto) throws SocketException, UnknownHostException {
+    private ControladorDeTrello(String droneDireccion, int dronePuerto) throws SocketException, UnknownHostException {
         socket = new DatagramSocket();
         address = InetAddress.getByName(droneDireccion);
         puerto = dronePuerto;
@@ -58,8 +58,8 @@ public class TelloController implements CommandInterface{
         packet = new DatagramPacket(buff, buff.length);
         socket.receive(packet);
         String received = new String(packet.getData(), 0, packet.getLength());
-
-        commandHistory.add(command + ":" + received);
+        if (received == null) received = "Error";
+        commandHistory.add(received);
 
         return received;
     }

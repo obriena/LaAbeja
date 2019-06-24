@@ -14,7 +14,10 @@ public class DespegaráComando implements Comando {
         String respuesta = CommandInterface.MALO;
         if (maquina.isModoDeComando()){
             respuesta = CommandInterface.BIEN;
+        } else {
+            System.err.println("Incapaz a complete comando: Despegara.  La Drone no es en Comando Modo");
         }
+
         return respuesta;
     }
 }

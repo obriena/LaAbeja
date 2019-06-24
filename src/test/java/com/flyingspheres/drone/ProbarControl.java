@@ -10,12 +10,12 @@ import java.net.UnknownHostException;
 
 public class ProbarControl {
 
-    TelloController control;
+    ControladorDeTrello control;
 
     @Before
     public void preparar(){
         try {
-            control = TelloController.createController("localhost", 4445);
+            control = ControladorDeTrello.createController("localhost", 4445);
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (UnknownHostException e) {
