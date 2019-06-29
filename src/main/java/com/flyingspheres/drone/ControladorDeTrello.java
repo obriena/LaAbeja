@@ -57,9 +57,17 @@ public class ControladorDeTrello implements CommandInterface{
 
         packet = new DatagramPacket(buff, buff.length);
         socket.receive(packet);
-        String received = new String(packet.getData(), 0, packet.getLength());
+        byte[] respuestaBytes = packet.getData();
+        int respuestaLongitud = packet.getLength();
+        String received = new String(respuestaBytes, 0, respuestaLongitud);
         if (received == null) received = "Error";
-        commandHistory.add(received);
+        if (!received.equals(CommandInterface.BIEN)){
+            System.out.println("Inesperado Respuesta para comando: " + command);
+            for (int a = 0; a < respuestaBytes.length; a++){
+                System.out.println(respuestaBytes[a]);
+            }
+        }
+        commandHistory.add(command);
 
         return received;
     }

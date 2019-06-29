@@ -18,7 +18,7 @@ public interface CommandInterface {
     public static final String MENSAJE = "mensaje";
     public static final String LLAMADORA = "llamadora";
     public static final String PUERTO = "puerto";
-    public static final String BIEN = "OK";
+    public static final String BIEN = "ok";
     public static final String MALO = "FALSE";
     public static final String APAGADA = "end";
 
